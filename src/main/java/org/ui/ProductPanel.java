@@ -75,6 +75,7 @@ public class ProductPanel extends JPanel {
 		try {
 			if (Product_list.isEmpty()) {
 				Product_list = db.getAllProduct();	
+				System.out.println(Product_list.size());
 			}
 			// Product[] Products = new Product[Product_list.size()];
 			// for (int i = 0; i < Products.length; i++) {
@@ -152,7 +153,7 @@ public class ProductPanel extends JPanel {
 					product.setPrice(Double.parseDouble(price_txt.getText()));
 					product.setPro_name(name_txt.getText());
 					product.setQuantity(Integer.parseInt(quantity_txt.getText()));;
-					product.setSaled(Integer.parseInt(saled_txt.getText()));;
+					product.setSale(Integer.parseInt(saled_txt.getText()));;
 					Product_list.add(product);
 					JOptionPane.showMessageDialog(MainJFrame.getFrame(), "Added");
 				}catch (NumberFormatException e) {
@@ -169,7 +170,7 @@ public class ProductPanel extends JPanel {
 	private void showProduct(Product[] Products) {
 		Product_table_model = new DefaultTableModel(Product_col, 0);
 		for (Product Product : Products) {
-			String[] rowData = { Product.getPcode(), Product.getPro_name(), Product.getQuantity()+"",Product.getSaled()+"",Product.getPrice()+"" };
+			String[] rowData = { Product.getPcode(), Product.getPro_name(), Product.getQuantity()+"",Product.getSale()+"",Product.getPrice()+"" };
 			Product_table_model.addRow(rowData);
 		}
 		Product_table.setModel(Product_table_model);
