@@ -23,6 +23,7 @@ import javax.swing.table.DefaultTableModel;
 
 import org.database.DataAccessController;
 import org.datastructure.CustomArrayList;
+import org.datastructure.SearchModule;
 import org.model.Customer;
 import org.utils.ArrayUtils;
 
@@ -33,7 +34,7 @@ public class CustomerPanel extends JPanel {
 	private DataAccessController db;
 	private String[] customer_col = { "ccode", "Customer Name", "Phone" };
 	private int currentPosition = 0;
-	private List<Customer> customer_list;
+	private static List<Customer> customer_list;
 	// component
 	private JButton load_btn, add_btn, save_btn, del_btn, search_btn, sort_btn;
 	private JTextField searh_txt;
@@ -51,6 +52,10 @@ public class CustomerPanel extends JPanel {
 		this.db = new DataAccessController();
 		init();
 		bind();
+	}
+	
+	public static void setCustomer_list(List<Customer> customer_list) {
+		CustomerPanel.customer_list = customer_list;
 	}
 
 	private void bind() {
@@ -136,14 +141,19 @@ public class CustomerPanel extends JPanel {
 				new JLabel("name"),name_txt,
 				new JLabel("phone"),phone_txt
 		};
+		
 		int result = JOptionPane.showConfirmDialog(null, customer_input, "Add new Customer", JOptionPane.PLAIN_MESSAGE);
 		if (result == JOptionPane.OK_OPTION) {
 			if (ccode_txt.getText().isEmpty() || name_txt.getText().isEmpty() || phone_txt.getText().isEmpty()) {
 				JOptionPane.showMessageDialog(MainJFrame.getFrame(), "invalid Input");
 			}else{
 				Customer customer=new Customer(ccode_txt.getText(),name_txt.getText(),phone_txt.getText());
-				customer_list.add(customer);
-				JOptionPane.showMessageDialog(MainJFrame.getFrame(), "Added");
+				if (SearchModule.binarySearch(customer_list, customer)>=0) {
+					JOptionPane.showMessageDialog(MainJFrame.getFrame(), "Duplicated");
+				}else{
+					customer_list.add(customer);
+					JOptionPane.showMessageDialog(MainJFrame.getFrame(), "Added");
+				}
 			}
 		} 
 	}

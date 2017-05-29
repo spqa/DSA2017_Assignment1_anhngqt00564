@@ -1,21 +1,17 @@
 package org.ui;
 
 import java.awt.BorderLayout;
-import java.awt.Button;
-import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.event.ActionEvent;
 import java.io.FileNotFoundException;
-import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
-import java.util.Map;
-
 import javax.swing.JButton;
 import javax.swing.JComponent;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
+import javax.swing.JProgressBar;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.JTextField;
@@ -23,6 +19,8 @@ import javax.swing.table.DefaultTableModel;
 
 import org.database.DataAccessController;
 import org.datastructure.CustomArrayList;
+import org.datastructure.SearchModule;
+import org.datastructure.SortModule;
 import org.model.Product;
 import org.utils.ArrayUtils;
 
@@ -32,8 +30,7 @@ public class ProductPanel extends JPanel {
 	// database
 	private DataAccessController db;
 	private String[] Product_col = { "pcode", "Product Name", "Quantity","Saled","Price" };
-	private int currentPosition = 0;
-	private List<Product> Product_list;
+	private static List<Product> Product_list;
 	// component
 	private JButton load_btn, add_btn, save_btn, del_btn, search_btn, sort_btn;
 	private JTextField searh_txt;
@@ -42,6 +39,7 @@ public class ProductPanel extends JPanel {
 	// layout
 	private JPanel top, center, bottom;
 	private JScrollPane scrollPane;
+	private static JProgressBar progressBar;
 	
 	//form
 	private JTextField pcode_txt,name_txt,quantity_txt,saled_txt,price_txt;
@@ -51,6 +49,10 @@ public class ProductPanel extends JPanel {
 		this.db = new DataAccessController();
 		init();
 		bind();
+	}
+	
+	public static void setProduct_list(List<Product> product_list) {
+		Product_list = product_list;
 	}
 
 	private void bind() {
@@ -95,6 +97,7 @@ public class ProductPanel extends JPanel {
 		Product temp = new Product(query);
 		System.out.println(temp);
 		int result = Collections.binarySearch(Product_list, temp);
+	
 		if (result >= 0) {
 			showProduct(new Product[] { Product_list.get(result) });
 		} else {
@@ -114,7 +117,7 @@ public class ProductPanel extends JPanel {
 
 	private Object delAction(ActionEvent x) {
 		String result = JOptionPane.showInputDialog("Enter pcode:").trim();
-		int index = Collections.binarySearch(Product_list, new Product(result));
+		int index = SearchModule.binarySearch(Product_list, new Product(result));
 		if (index<0) {
 			JOptionPane.showMessageDialog(MainJFrame.getFrame(), "pcode not found");
 		}else{
@@ -153,9 +156,14 @@ public class ProductPanel extends JPanel {
 					product.setPrice(Double.parseDouble(price_txt.getText()));
 					product.setPro_name(name_txt.getText());
 					product.setQuantity(Integer.parseInt(quantity_txt.getText()));;
-					product.setSale(Integer.parseInt(saled_txt.getText()));;
-					Product_list.add(product);
-					JOptionPane.showMessageDialog(MainJFrame.getFrame(), "Added");
+					product.setSale(Integer.parseInt(saled_txt.getText()));
+					if (SearchModule.binarySearch(Product_list, product)>=0) {
+						JOptionPane.showMessageDialog(MainJFrame.getFrame(), "Duplicated");
+					}else{
+						Product_list.add(product);
+						JOptionPane.showMessageDialog(MainJFrame.getFrame(), "Added");
+					}
+	
 				}catch (NumberFormatException e) {
 					JOptionPane.showMessageDialog(this, "Invalid Number Format");
 				}
@@ -216,6 +224,13 @@ public class ProductPanel extends JPanel {
 		center.add(scrollPane);
 
 		this.add(center, BorderLayout.CENTER);
+		
+		//bottom
+		bottom=new JPanel(new BorderLayout());
+		progressBar=new JProgressBar();
+		bottom.add(progressBar);
+		
+		this.add(bottom, BorderLayout.SOUTH);
 	}
 
 }

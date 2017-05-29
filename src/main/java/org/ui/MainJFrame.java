@@ -1,9 +1,7 @@
 package org.ui;
 
 import java.awt.BorderLayout;
-import java.awt.Color;
 import java.awt.HeadlessException;
-import java.awt.MenuBar;
 import java.util.List;
 
 import javax.swing.JFrame;
@@ -11,19 +9,17 @@ import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
 import javax.swing.JPanel;
-import javax.swing.JScrollPane;
 import javax.swing.JTabbedPane;
-import javax.swing.JTable;
 import javax.swing.UIManager;
 import javax.swing.UIManager.LookAndFeelInfo;
 
 import org.actions.AboutAction;
 import org.actions.LoadFileAction;
-import org.database.DataAccessController;
 import org.model.Customer;
 import org.model.Order;
 import org.model.Product;
 
+@SuppressWarnings("serial")
 public class MainJFrame extends JFrame {
 
 	// frame

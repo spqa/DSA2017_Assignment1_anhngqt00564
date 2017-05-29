@@ -10,7 +10,7 @@ public class LoadFileAction implements IClickAction{
 
 	@Override
 	public void handle(ActionEvent x) {
-		JOptionPane.showConfirmDialog(MainJFrame.getFrame(), "yo bro");
+		MainJFrame.getMainTabPane().setSelectedIndex(3);
 	}
 
 }

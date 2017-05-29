@@ -1,7 +1,5 @@
 package org.model;
 
-import java.util.Comparator;
-
 public class Order implements Comparable<Order>{
 
 	// About ordering:
@@ -54,8 +52,12 @@ public class Order implements Comparable<Order>{
 
 	@Override
 	public int compareTo(Order o) {
+		int pcodeCmp=this.pcode.compareTo(o.pcode);
 	
-		return this.ccode.compareTo(o.ccode)+this.pcode.compareTo(o.pcode);
+		if (pcodeCmp==0) {
+			return this.ccode.compareTo(o.ccode);
+		}
+		return pcodeCmp;
 	}
 
 }
