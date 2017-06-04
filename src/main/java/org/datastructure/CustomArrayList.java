@@ -8,13 +8,13 @@ public class CustomArrayList<E extends Comparable< ? super E>> extends SimpleArr
 	
 	public CustomArrayList(List<E> e){
 		super(e);
-		Collections.sort(this);		
-	}
+		SortModule.quickSort(this);		
+	}	
 	
 	public CustomArrayList() {
 		super();
 	}
-
+	 
 	public boolean add(E e) {
         int index = Collections.binarySearch(this, e);
         if (index < 0) index = -index-1;

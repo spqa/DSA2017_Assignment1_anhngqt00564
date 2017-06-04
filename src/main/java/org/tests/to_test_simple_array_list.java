@@ -1,9 +1,9 @@
 package org.tests;
 
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Iterator;
 
-import org.datastructure.ArrayList;
 import org.datastructure.CustomArrayList;
 import org.datastructure.SimpleArrayList;
 import org.model.Customer;

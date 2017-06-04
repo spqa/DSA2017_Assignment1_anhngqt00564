@@ -1,6 +1,5 @@
 package org.tests;
 
-import org.datastructure.ArrayList;
 
 public class to_test_for_loop {
 

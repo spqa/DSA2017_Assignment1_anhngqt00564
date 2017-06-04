@@ -8,9 +8,9 @@ import java.util.ListIterator;
 
 public class SimpleArrayList<E> implements List<E>, Iterable<E> {
 
-	private E[] data;
-	private int size;
-	private int capacity;
+	protected E[] data;
+	protected int size;
+	protected int capacity;
 
 	@SuppressWarnings("unchecked")
 	public SimpleArrayList() {
@@ -61,7 +61,7 @@ public class SimpleArrayList<E> implements List<E>, Iterable<E> {
 	}
 	
 	private void rangeCheck(int index) {
-		if (index<0 || index>(size-1)) {
+		if (index<0 || index>(size)) {
 			throw new IndexOutOfBoundsException();
 		}
 	}
