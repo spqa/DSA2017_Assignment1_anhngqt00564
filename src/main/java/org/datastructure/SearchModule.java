@@ -7,18 +7,9 @@ import org.model.Customer;
 
 public class SearchModule {
 
-	public static <T> int binarySearch(List<? extends Comparable<? super T>> list, T t) {
+	public static <T> int binarySearch(List<? extends Comparable<? super T>> list, T key) {
 		
-		return indexedBinarySearch(list, t);
-
-	}
-	
-	
-	
-	private static <T> int indexedBinarySearch(List<? extends Comparable<? super T>> list, T key)
-    {
-		
-        int low = 0;
+		int low = 0;
         int high = list.size()-1;
 
         while (low <= high) {
@@ -34,7 +25,16 @@ public class SearchModule {
                 return mid; // key found
         }
         return -(low + 1);  // key not found
-    }
+
+	}
+	
+	
+	
+//	private static <T> int indexedBinarySearch(List<? extends Comparable<? super T>> list, T key)
+//    {
+//		
+//        
+//    }
 
 	public static void main(String[] args) {
 		List<Customer> list = new CustomArrayList<>();
